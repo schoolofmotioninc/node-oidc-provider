@@ -1595,6 +1595,7 @@ _**default value**_:
   mode: 'lax',
   request: false,
   requestUri: true,
+  requireEncryptedRequestObject: [Function: requireEncryptedRequestObject], // see expanded details below
   requireSignedRequestObject: false,
   requireUriRegistration: true
 }
@@ -1635,6 +1636,23 @@ Enables the use and validations of the `request_uri` parameter.
 _**default value**_:
 ```js
 true
+```
+
+#### requireEncryptedRequestObject
+
+Makes the use of encrypted request objects required on a per-request basis to allow an OP policy to dictate when request object encryption must be used. This helper is only called when the encryption feature is enabled and the client provided an unencrypted request object. It is meant to fill a gap in available client metadata definitions that currently don't allow to specify a client must use encryption.   
+  
+
+_**recommendation**_: Use `return true` when it's required to provide an encrypted Request Object. Use `return false` (default) when use of encrypted Request Objects is optional.  
+
+
+_**default value**_:
+```js
+function requireEncryptedRequestObject(ctx, client) {
+  // @param ctx - koa request context
+  // @param client - client making the request
+  return false;
+}
 ```
 
 #### requireSignedRequestObject
